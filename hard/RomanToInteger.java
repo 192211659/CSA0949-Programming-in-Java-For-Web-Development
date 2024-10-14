@@ -2,9 +2,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RomanToInteger {
-    
+
     public static int romanToInt(String s) {
-        // Map to store Roman numeral values
+        // Map of Roman numerals and their corresponding integer values
         Map<Character, Integer> romanMap = new HashMap<>();
         romanMap.put('I', 1);
         romanMap.put('V', 5);
@@ -17,36 +17,35 @@ public class RomanToInteger {
         int total = 0;
         int prevValue = 0;
 
-        // Iterate through the string in reverse order
+        // Loop through the Roman numeral string from right to left
         for (int i = s.length() - 1; i >= 0; i--) {
-            char currentChar = s.charAt(i);
-            int currentValue = romanMap.getOrDefault(currentChar, 0);
-
-            // If the current value is less than the previous value, subtract it
-            if (currentValue < prevValue) {
-                total -= currentValue;
-            } else {
-                total += currentValue;
+            int currValue = romanMap.getOrDefault(s.charAt(i), -1);
+            if (currValue == -1) {
+                System.out.println("Invalid Roman numeral: " + s);
+                return -1; // Return -1 for invalid Roman numerals (as seen in test case 4, 5)
             }
 
-            // Update previous value to current value for next iteration
-            prevValue = currentValue;
+            // If the current value is less than the previous value, subtract it, otherwise add it
+            if (currValue < prevValue) {
+                total -= currValue;
+            } else {
+                total += currValue;
+            }
+            prevValue = currValue;
         }
 
         return total;
     }
 
     public static void main(String[] args) {
-        // Example Input: s = "III"
-        String input1 = "III";
-        System.out.println("Input: \"" + input1 + "\"");
-        System.out.println("Output: " + romanToInt(input1)); // Output: 3
+        // Example Input
+        System.out.println(romanToInt("III")); // Output: 3
 
-        // Test cases:
-        System.out.println("Test Case 1: " + romanToInt("LVIII"));    // Output: 58
-        System.out.println("Test Case 2: " + romanToInt("MCMXCI"));   // Output: 1991
-        System.out.println("Test Case 3: " + romanToInt("V"));         // Output: 5
-        System.out.println("Test Case 4: " + romanToInt("LZAII"));     // Output: 0 (invalid input)
-        System.out.println("Test Case 5: " + romanToInt("MCCDTIV"));   // Output: 0 (invalid input)
+        // Test cases
+        System.out.println(romanToInt("LVIII"));   // Output: 58
+        System.out.println(romanToInt("MCMXCI"));  // Output: 1991
+        System.out.println(romanToInt("V"));       // Output: 5
+        System.out.println(romanToInt("LZAII"));   // Output: -1 (Invalid Roman numeral)
+        System.out.println(romanToInt("MCCDTIV")); // Output: -1 (Invalid Roman numeral)
     }
 }

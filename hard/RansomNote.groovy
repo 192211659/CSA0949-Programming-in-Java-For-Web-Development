@@ -2,39 +2,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RansomNote {
-    
     public static boolean canConstruct(String ransomNote, String magazine) {
-        // Create a map to count the frequency of each letter in magazine
-        Map<Character, Integer> letterCount = new HashMap<>();
-
+        // Create a frequency map for characters in the magazine
+        Map<Character, Integer> magazineMap = new HashMap<>();
+        
         // Count the frequency of each letter in the magazine
         for (char c : magazine.toCharArray()) {
-            letterCount.put(c, letterCount.getOrDefault(c, 0) + 1);
+            magazineMap.put(c, magazineMap.getOrDefault(c, 0) + 1);
         }
 
-        // Check if ransomNote can be constructed from magazine
+        // Check if the ransom note can be constructed
         for (char c : ransomNote.toCharArray()) {
-            if (letterCount.getOrDefault(c, 0) == 0) {
-                return false; // Not enough letters in magazine
+            if (!magazineMap.containsKey(c) || magazineMap.get(c) == 0) {
+                return false;
             }
-            letterCount.put(c, letterCount.get(c) - 1); // Use the letter
+            magazineMap.put(c, magazineMap.get(c) - 1);
         }
 
-        return true; // Ransom note can be constructed
+        return true;
     }
 
     public static void main(String[] args) {
         // Example Input
-        String ransomNote1 = "a";
-        String magazine1 = "b";
-        System.out.println("Input: ransomNote = \"" + ransomNote1 + "\", magazine = \"" + magazine1 + "\"");
-        System.out.println("Output: " + canConstruct(ransomNote1, magazine1)); // Output: false
+        System.out.println(canConstruct("a", "b")); // Output: false
 
         // Test cases
-        System.out.println("Test Case 1: " + canConstruct("aa", "ab"));         // Output: false
-        System.out.println("Test Case 2: " + canConstruct("aa", "aab"));        // Output: true
-        System.out.println("Test Case 3: " + canConstruct("abc", "abc"));       // Output: true
-        System.out.println("Test Case 4: " + canConstruct("good", "better"));   // Output: false
-        System.out.println("Test Case 5: " + canConstruct("xyz", "123"));       // Output: false
+        System.out.println(canConstruct("aa", "ab"));   // Output: false
+        System.out.println(canConstruct("aa", "aab"));  // Output: true
+        System.out.println(canConstruct("abc", "abc")); // Output: true
+        System.out.println(canConstruct("good", "better")); // Output: false
+        System.out.println(canConstruct("xyz", "123"));  // Output: false
     }
 }

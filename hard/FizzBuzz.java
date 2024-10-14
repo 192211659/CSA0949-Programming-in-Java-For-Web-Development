@@ -2,36 +2,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FizzBuzz {
-    
     public static List<String> fizzBuzz(int n) {
-        List<String> answer = new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
         for (int i = 1; i <= n; i++) {
             if (i % 3 == 0 && i % 5 == 0) {
-                answer.add("FizzBuzz");
+                result.add("FizzBuzz");
             } else if (i % 3 == 0) {
-                answer.add("Fizz");
+                result.add("Fizz");
             } else if (i % 5 == 0) {
-                answer.add("Buzz");
+                result.add("Buzz");
             } else {
-                answer.add(String.valueOf(i));
+                result.add(String.valueOf(i));
             }
         }
 
-        return answer;
+        return result;
     }
 
     public static void main(String[] args) {
-        // Example Input: n = 3
-        int n = 3;
-        List<String> result = fizzBuzz(n);
-        System.out.println(result);
+        // Example 1: Input n = 3
+        System.out.println(fizzBuzz(3));
 
-        // Test cases:
-        System.out.println(fizzBuzz(5));    // Test Case 1: n = 5
-        System.out.println(fizzBuzz(10));   // Test Case 2: n = 10
-        System.out.println(fizzBuzz(12));   // Test Case 3: n = 12
-        System.out.println(fizzBuzz(18));   // Test Case 4: n = 18
-        System.out.println(fizzBuzz(20));   // Test Case 5: n = 20
+        // Test cases
+        System.out.println(fizzBuzz(5));  // ["1", "2", "Fizz", "4", "Buzz"]
+        System.out.println(fizzBuzz(10)); // ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz"]
+        System.out.println(fizzBuzz(12)); // ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz"]
+        System.out.println(fizzBuzz(18)); // ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "16", "17", "Fizz"]
+        System.out.println(fizzBuzz(20)); // ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "16", "17", "Fizz", "19", "Buzz"]
     }
 }
