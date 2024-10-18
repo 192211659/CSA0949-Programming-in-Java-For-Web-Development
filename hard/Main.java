@@ -1,61 +1,42 @@
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
-// Base class for Student
-class Student {
-    int[] marks = new int[6];
-    String[] subjects = {"Python", "C Programming", "Mathematics", "Physics", "Chemistry", "Professional Ethics"};
-    int totalMarks = 0;
-    double aggregate = 0;
+class WordFilter {
+    private Map<String, Integer> prefixSuffixMap;
 
-    // Method to input marks
-    public void inputMarks() {
-        Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < marks.length; i++) {
-            System.out.print("Enter the marks in " + subjects[i] + ": ");
-            marks[i] = scanner.nextInt();
+    public WordFilter(String[] words) {
+        prefixSuffixMap = new HashMap<>();
+
+        // Populate the map with all possible prefix and suffix combinations
+        for (int index = 0; index < words.length; index++) {
+            String word = words[index];
+            for (int i = 0; i <= word.length(); i++) {
+                for (int j = 0; j <= word.length(); j++) {
+                    String prefix = word.substring(0, i); // prefix of length i
+                    String suffix = word.substring(word.length() - j); // suffix of length j
+                    // Store the index for the combination of prefix and suffix
+                    prefixSuffixMap.put(prefix + "|" + suffix, index);
+                }
+            }
         }
     }
 
-    // Method to calculate total and aggregate
-    public void calculateTotalAndAggregate() {
-        for (int mark : marks) {
-            totalMarks += mark;
-        }
-        aggregate = totalMarks / 6.0;  // Aggregate is average of all marks
-    }
-}
-
-// Derived class for Grading
-class Grading extends Student {
-    
-    // Method to display total, aggregate, and grade
-    public void displayResult() {
-        System.out.println("Total = " + totalMarks);
-        System.out.printf("Aggregate = %.2f\n", aggregate);
-
-        // Determine and display grade
-        if (aggregate > 75) {
-            System.out.println("Class: DISTINCTION");
-        } else if (aggregate > 60) {
-            System.out.println("Class: FIRST DIVISION");
-        } else if (aggregate > 50) {
-            System.out.println("Class: SECOND DIVISION");
-        } else if (aggregate > 40) {
-            System.out.println("Class: THIRD DIVISION");
-        } else {
-            System.out.println("Class: FAIL");
-        }
+    public int f(String pref, String suff) {
+        // Look up the combination of prefix and suffix in the map
+        return prefixSuffixMap.getOrDefault(pref + "|" + suff, -1);
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        // Create object of derived class Grading
-        Grading student = new Grading();
+        String[] words = {"apple", "banana", "app", "apricot", "bat"};
+        WordFilter wordFilter = new WordFilter(words);
 
-        // Input marks, calculate total, aggregate, and display result
-        student.inputMarks();
-        student.calculateTotalAndAggregate();
-        student.displayResult();
+        // Test cases
+        System.out.println(wordFilter.f("a", "e")); // Output: 0 (word "apple")
+        System.out.println(wordFilter.f("b", "a")); // Output: 1 (word "banana")
+        System.out.println(wordFilter.f("ap", "p")); // Output: 2 (word "app")
+        System.out.println(wordFilter.f("ap", "t")); // Output: -1 (no word)
+        System.out.println(wordFilter.f("b", "t")); // Output: 4 (word "bat")
     }
 }
