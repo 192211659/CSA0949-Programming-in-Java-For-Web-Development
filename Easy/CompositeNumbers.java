@@ -1,37 +1,38 @@
-import java.util.Scanner;
-
 public class CompositeNumbers {
-
-    // Function to check if a number is composite
+    // Method to check if a number is composite
     public static boolean isComposite(int num) {
         if (num <= 1) {
-            return false; // 0, 1, and negative numbers are not composite
+            return false; // 0 and 1 are not composite
         }
-        int divisorCount = 0;
+        int count = 0;
         for (int i = 1; i <= num; i++) {
             if (num % i == 0) {
-                divisorCount++;
+                count++;
             }
         }
-        return divisorCount > 2; // A composite number has more than 2 divisors
+        return count > 2; // A composite number has more than 2 divisors
     }
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Example array
-        int[] arr = {16, 18, 27, 16, 23, 21, 19};
-
-        int compositeCount = 0;
-
-        // Loop through the array to count composite numbers
-        for (int num : arr) {
-            if (isComposite(num)) {
-                compositeCount++;
+        // Sample input values
+        int A = 12; // Change this value for different test cases
+        int B = 19; // Change this value for different test cases
+        // Validate input
+        if (A > B) {
+            System.out.println("A should be less than or equal to B.");
+            return;
+        }
+        System.out.print("Composite numbers between " + A + " and " + B + ": ");
+        boolean foundComposite = false; // Flag to check if we found any composite numbers
+        for (int i = A; i <= B; i++) {
+            if (isComposite(i)) {
+                System.out.print(i + (i < B ? ", " : "")); // Print the number with a comma if not the last
+                foundComposite = true; // Set the flag to true if a composite number is found
             }
         }
-
-        // Output the result
-        System.out.println("Number of Composite Numbers = " + compositeCount);
+        if (!foundComposite) {
+            System.out.println("None"); // If no composite numbers were found
+        } else {
+            System.out.println(); // New line after output
+        }
     }
 }
